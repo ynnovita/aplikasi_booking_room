@@ -16,7 +16,6 @@ if($qry->num_rows > 0){
                     <label for="control-label" class="col-sm-3 col-form-label">Check In 
                         <span class="red-asterisk"> *</span>
                     </label>
-                    <input type="date" class='form form-control' required   name='date_in'>
                     <div class="col-sm-9">
                         <div class="input-group">
                             <div class="input-group-prepend">
@@ -24,8 +23,8 @@ if($qry->num_rows > 0){
                                     <i class="fa fa-calendar"></i>
                                 </span>
                             </div>
-                            <input type="datetime-local" class="form-control"
-                                name='date_in' min="<?php echo Util::dateToday('0'); ?>" required>
+                            <input type="datetime-local" class="form form-control"  
+                            name='date_in' min="<?php echo Util::dateToday('0'); ?>" required>
                         </div>
                     </div>
 
@@ -40,7 +39,7 @@ if($qry->num_rows > 0){
                                 </span>
                             </div>
                             <input type="datetime-local" class="form-control" 
-                                name='date_out' min="<?php echo Util::dateToday('1'); ?>" required>
+                            name='date_out' min="<?php echo Util::dateToday('0'); ?>" required>
                         </div>
                     </div>
 
@@ -143,7 +142,7 @@ class Util{
     }
     
     function calc_total(){
-        var grand_total =0;
+        var room_rate, grand_total =0;
         var room_rate = $('#room_rate').text()
             room_rate = room_rate.replace(/,/g,'')
         var hours = parseFloat($('#hours').text());

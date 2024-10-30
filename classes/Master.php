@@ -107,6 +107,20 @@ Class Master extends DBConnection {
 		}
 		return json_encode($resp);
 	}
+	function delete_room(){
+		extract($_POST);
+		if (!empty($id)) {
+			$del = $this->conn->query("DELETE FROM `room_list` WHERE id = '{$id}'");
+		if($del){
+			$resp['status'] = 'success';
+		} else {
+			$resp['status'] = 'failed';
+			$resp['error'] = $this->conn->error;
+		}
+		}		
+		return json_encode($resp);
+	}
+
 	function delete_p_img(){
 		extract($_POST);
 		if(is_file($path)){
@@ -198,13 +212,12 @@ Class Master extends DBConnection {
 		extract($_POST);
 		$data ="";
 		foreach($_POST as $k =>$v){
-			if(!in_array($k,array('id','accom_id'))){
+			if($k != 'id'){
 				if(!empty($data)) $data .=",";
 				$data .= " `{$k}`='{$v}' ";
 			}
 		}
-		$accom_id = implode(',',$accom_id);
-		$data .= ", accommodation_ids='{$accom_id}' ";
+
 		$data .= ", user_id='{$this->settings->userdata('id')}' ";
 
 		$sql = "INSERT INTO `bookings` set $data";
@@ -231,6 +244,19 @@ Class Master extends DBConnection {
 		}
 			return json_encode($resp);
 	}
+	function delete_booking(){
+		extract($_POST);
+		if (!empty($id)) {
+			$del = $this->conn->query("DELETE FROM `bookings` WHERE id = '{$id}'");
+		if($del){
+			$resp['status'] = 'success';
+		} else {
+			$resp['status'] = 'failed';
+			$resp['error'] = $this->conn->error;
+		}
+		}		
+		return json_encode($resp);
+	}
 	function save_inquiry(){
 		extract($_POST);
 		$data = "";
@@ -246,7 +272,19 @@ Class Master extends DBConnection {
 			$resp['error'] = $this->conn->error;
 		}
 		return json_encode($resp);
-
+	}
+	function delete_inquiry(){
+		extract($_POST);
+		if (!empty($id)) {
+			$del = $this->conn->query("DELETE FROM `inquiry` WHERE id = '{$id}'");
+		if($del){
+			$resp['status'] = 'success';
+		} else {
+			$resp['status'] = 'failed';
+			$resp['error'] = $this->conn->error;
+		}
+		}		
+		return json_encode($resp);
 	}
 }
 
@@ -266,7 +304,9 @@ switch ($action) {
 	case 'save_room':
 		echo $Master->save_room();
 	break;
-
+	case 'delete_room':
+		echo $Master->delete_room();
+	break;
 	case 'register':
 		echo $Master->register();
 	break;
@@ -279,8 +319,14 @@ switch ($action) {
 	case 'update_book_status':
 		echo $Master->update_book_status();
 	break;
+	case 'delete_booking':
+		echo $Master->delete_booking();
+	break;
 	case 'save_inquiry':
 		echo $Master->save_inquiry();
+	break;
+	case 'delete_inquiry':
+		echo $Master->delete_inquiry();
 	break;
 	default:
 		// echo $sysset->index();

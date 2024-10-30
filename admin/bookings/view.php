@@ -18,20 +18,8 @@ if(isset($_GET['id'])){
 <p><b>Room:</b> <?php echo $room ?></p>
 <p><b>Details:</b> <span class="truncate"><?php echo strip_tags(stripslashes(html_entity_decode($description))) ?></span></p>
 <p><b>Schedule:</b> <?php echo date("d F Y H:i",strtotime($date_in)).' - '.date("d F Y H:i",strtotime($date_out)) ?></p>
-<?php if(!empty($accommodation_ids)): ?>
-<p><b>Payment Method:</b>
-<?php 
-$accom = "";
-$qry2 = $conn->query("SELECT * FROM accommodations where id in ({$accommodation_ids}) order by accommodation asc");
-while($row= $qry2->fetch_assoc()):
-    if(!empty($accom)) $accom .= ", ";
-    $accom .= $row['accommodation'];
-endwhile;
-echo $accom;
-?>
-<?php ?>
-</p>
-<?php endif; ?>
+<p><b>Total Payment:</b> <?php echo ($total_amount) ?> </p>
+
 <form action="" id="book-status">
     <input type="hidden" name="id" value="<?php echo $id ?>">
     <div class="form-group">

@@ -73,14 +73,14 @@
 <script>
 	$(document).ready(function(){
 		$('.delete_data').click(function(){
-			_conf("Are you sure to delete this accommodation permanently?","delete_accommodation",[$(this).attr('data-id')])
+			_conf("Are you sure to delete this room permanently?","delete_room",[$(this).attr('data-id')])
 		})
 		$('.table').dataTable();
 	})
-	function delete_accommodation($id){
+	function delete_room($id){
 		start_loader();
 		$.ajax({
-			url:_base_url_+"classes/Master.php?f=delete_accommodation",
+			url:_base_url_+"classes/Master.php?f=delete_room",
 			method:"POST",
 			data:{id: $id},
 			dataType:"json",
