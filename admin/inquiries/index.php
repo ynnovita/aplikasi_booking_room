@@ -12,7 +12,7 @@
 	</div>
 	<div class="card-body">
         <div class="container-fluid">
-        <table class="table table-stripped text-dark">
+        <table class="table table-striped text-dark">
             <colgroup>
                 <col width="10%">
                 <col width="20%">
