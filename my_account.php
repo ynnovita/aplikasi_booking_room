@@ -7,20 +7,22 @@
         <a href="./?page=edit_account" class="btn btn btn-primary btn-flat"><div class="fa fa-user-cog"></div> Manage Account</a>
     </div>
         <hr class="border-warning">
-        <table class="table table-stripped text-dark">
+        <table class="table table-striped text-dark">
             <colgroup>
                 <col width="5%">
-                <col width="10">
-                <col width="25">
-                <col width="25">
-                <col width="15">
-                <col width="10">
+                <col width="15%">
+                <col width="10%">
+                <col width="10%">
+                <col width="25%">
+                <col width="15%">
+                <col width="20%">
             </colgroup>
             <thead>
                 <tr>
                     <th>#</th>
                     <th>DateTime</th>
                     <th>Room</th>
+                    <th>Adults</th>
                     <th>Schedule</th>
                     <th>Status</th>
                     <th>Action</th>
@@ -36,6 +38,7 @@
                         <td><?php echo $i++ ?></td>
                         <td><?php echo date("Y-m-d H:i",strtotime($row['date_created'])) ?></td>
                         <td><?php echo $row['room'] ?></td>
+                        <td><?php echo $row['adults'] ?></td>
                         <td><?php echo date("Y-m-d H:i",strtotime($row['date_in'])) . ' - '.date("Y-m-d H:i",strtotime($row['date_out'])) ?></td>
                         <td class="text-center">
                             <?php if($row['status'] == 0): ?>
