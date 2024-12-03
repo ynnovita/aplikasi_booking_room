@@ -1,12 +1,28 @@
-<?php if($_settings->chk_flashdata('success')): ?>
-<script>
-	alert_toast("<?php echo $_settings->flashdata('success') ?>",'success')
-</script>
-<?php endif;?>
+<?php
+$SqlPeriode = "";
+$tglAwal = isset($_POST['txtTglAwal']) ? $_POST['txtTglAwal'] : date('Y-m-d');
+$tglAkhir = isset($_POST['txtTglAkhir']) ? $_POST['txtTglAkhir'] : date('Y-m-d');
+
+$statusFilter = isset($_POST['status']) ? $_POST['status'] : "all";
+
+// Filter berdasarkan tanggal
+$SqlPeriode = "WHERE b.date_created BETWEEN '".$tglAwal."' AND '".$tglAkhir."'";
+
+// Filter berdasarkan status jika tidak "all"
+if ($statusFilter !== "all") {
+    $SqlPeriode .= " AND A.status = '".$statusFilter."'";
+}
+?>
+
 <div class="card card-outline card-primary">
 	<div class="card-header">
-		<h3 class="card-title">Detailed of Transactions</h3>
-	</div>
+    <div class="col-6">
+    <div class="form-group">
+		<h3 class="card-title mb-3">Detailed of Transactions</h3>
+        <h4 class="card-title">Periode Tanggal <b><?php echo ($tglAwal); ?></b> s/d <b><?php echo ($tglAkhir); ?></b></h4>
+        </div>    
+    </div>
+    </div>
 	<div class="card-body">
         <div class="d-flex align-items-center mb-2">
             <div class="col-4">
@@ -21,25 +37,25 @@
             <div class="col-2">
                 <div class="form-group">
                     <label><b>Start Date:</b></label><br>
-                    <input type="date" id="start_date" class='form form-control'>
+                    <input type="date" name="start_date" id="start_date" class="form-control" value="<?php echo $start_date; ?>">
                 </div>
             </div>
             <div class="col-2">
                 <div class="form-group">
                     <label><b>End Date:</b></label><br>
-                    <input type="date" id="end_date" class='form form-control'>
+                    <input type="date" name="end_date" id="end_date" class="form-control" value="<?php echo $end_date; ?>">
                 </div>
             </div>
             <div class="col-2">
                 <div class="form-group">
                     <label><b>Search:</b></label><br>
-                    <button class="btn btn-primary form-control" name="search" id="search"><i class="fas fa-search"></i> Search</button>
+                    <button class="btn btn-primary form-control" type="submit" name="search" id="search"><i class="fas fa-search"></i> Search</button>
                 </div>
             </div>
             <div class="col-2">
                 <div class="form-group">
                     <label><b>Print:</b></label><br>
-                    <a href="cetak.php?act=print" class="btn btn-warning btn-primary form-control"><span class="fas fa-print"></span>  Print</a>
+                    <a href="reports/cetak.php" data-id="<?php echo $start_date;?><?php echo $end_date; ?>"><target="_blank" alt="Edit Data" class="btn btn-warning btn-primary form-control"><span class="fas fa-print"></span> Print</a>
                 </div>
             </div>
         </div>
@@ -89,7 +105,7 @@
                                 <span class="badge badge-success">Done</span>
                             <?php endif; ?>
                         </td>
-                        <td><?php echo $row['total_amount'] ?></td>
+                        <td>Rp.<?php echo number_format($row['total_amount']) ?></td>
                     </tr>
                 <?php endwhile; ?>
             </tbody>
@@ -106,6 +122,7 @@
 
         rows.forEach(row => {
             const rowDate = row.getAttribute("data-date");
+            const rowStatus = row.getAttribute("data-status");
 
             // Initialize visibility
             let showRow = true;
@@ -134,7 +151,7 @@
     });
 
     // Search button event listener
-    document.getElementById("search").addEventListener('click', function() {
+    document.getElementById("search").addEventListener("click", function() {
         filterStatusAndDate();  // Filter by both status and date when searching
     });
 

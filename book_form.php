@@ -91,7 +91,7 @@ if($qry->num_rows > 0){
                         <td class="text-right" id="room_rate"><?php echo number_format($price) ?></td>
                     </tr>
                     <tr>
-                        <td>Duration</td>
+                        <td>Duration <input type="hidden" name="duration" value="0"></td>
                         <td class="text-right" id="hours"><?php echo 0 ?></td>
                     </tr>
                     <tr class="border-top">
@@ -158,6 +158,7 @@ class Util{
             if($('[name="date_in"]').val() != '' && $('[name="date_out"]').val() != ''){
                 var hours = hours_between($('[name="date_in"]').val(),$('[name="date_out"]').val())
                 $('#hours').text(hours)
+                $('[name="duration"]').val(hours)
                 calc_total()
             }
         })

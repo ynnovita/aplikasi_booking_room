@@ -1,80 +1,43 @@
-<div class="container">
-    <div class="container-fluid">
-        <div class="row mb-2">
-            <div class="col-sm-12">
-                <h1 class="text-center">Laporan Transaksi</h1>
-                <hr>
-            </div>
-        </div>
-    </div>
-    <div class="container-fluid">
-        <div class="card">
-            <div class="card-body">
-                <table id="example2" class="table table-bordered table-hover">
-                    <thead class="text-center">
-                        <tr>
-                            <th>#</th>
-                            <th>Tanggal</th>
-                            <th>Kode</th>
-                            <th>Meja</th>
-                            <th>Status</th>
-                            <th>Total Bayar</th>
-                        </tr>
-                    </thead>
-                    <tbody id="laporan_trx">
-                        <?php
-                        $no = 1;
-                        if (mysqli_num_rows($data) > 0) {
-                            while ($item = mysqli_fetch_array($data)) {
-                        ?>
-                                <tr>
-                                    <td style="width: 10%;"><?= $no++ ?></td>
+<?php
+define('FPDF_PATH', 'C:\xampp\htdocs\aplikasi_booking_room\libs\fpdf');
+require(FPDF_PATH . '/fpdf.php');
 
-                                    <td><?= $item['tgl_transaksi'] ?></td>
-                                    <td><?= $item['no_transaksi'] ?></td>
-                                    <td><?= $item['no_meja'] ?> (<?= $item['jenis_meja'] ?>) </td>
-                                    <td>
-                                        <?php if ($item['status'] == "proses") { ?>
-                                            <span class="badge badge-warning">Sedang Di Proses</span>
-                                        <?php } else { ?>
-                                            <span class="badge badge-success">Selesai</span>
-                                        <?php } ?>
-                                    </td>
-                                    <td>Rp.<?= number_format($item['jumlah_bayar']) ?>.00,-</td>
-                                </tr>
-                        <?php
-                            }
-                        }else{
-                            ?>
-                            <tr>
-                                <td colspan="100%" class="text-center text-muted">Tidak Ada Data</td>
-                            </tr>
-                            <?php
-                        }
-                        ?>
-                    </tbody>
-                </table>
-                <div class="row">
-                    <div class="col-sm-9"></div>
-                    <div class="col-sm-3 text-center">
-                        <br>
-                        <br>
-                        <p>
-                            Karangploso, ....
-                            <br>
-                            <br>
-                            <br>
-                            ................
-                        </p>
-                        <br>
-                        <br>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </div>
-</div>
 
-<script>
-    window.print();
-</script>
+$pdf = new FPDF('p', 'mm', 'A4');
+$pdf->AddPage();
+$pdf->SetFont('Arial', 'B', 16);
+$pdf->Cell(0, 10, 'Data Transaksi', 0, 1, 'C');
+$pdf->Cell(100, 10, 'Periode : ', 0, 1, 'C');
+$pdf->Output('laporan-penjualan.pdf','I');
+
+// Header tabel
+$pdf->SetFont('Arial', 'B', 12);
+$pdf->Cell(30, 10, 'ID', 1);
+$pdf->Cell(60, 10, 'Date Created', 1);
+$pdf->Cell(30, 10, 'User', 1);
+$pdf->Cell(70, 10, 'Room', 1);
+$pdf->Cell(30, 10, 'Schedule', 1);
+$pdf->Cell(30, 10, 'Total', 1);
+$pdf->Ln();
+
+
+
+// Menampilkan data transaksi
+$pdf->SetFont('Arial', '', 12);
+
+    $pdf->Cell(30, 10, $row['id'], 1);
+    $pdf->Cell(60, 10, date("Y-m-d H:i",strtotime($row['date_created'])), 1);
+    $pdf->Cell(30, 10, $row['name'], 1);
+    $pdf->Cell(70, 10, $row['room'], 1);
+    $pdf->Cell(30, 10, date("Y-m-d H:i",strtotime($row['date_in'])).' - '.date("Y-m-d H:i",strtotime($row['date_out'])), 1);
+    $pdf->Cell(30, 10, number_format($row['total_amount'], 2), 1);
+    $pdf->Ln();
+
+
+// Menutup koneksi database
+mysqli_close($conn);
+
+// Output PDF ke browser
+$pdf->Output();
+
+?>

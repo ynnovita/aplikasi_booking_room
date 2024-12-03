@@ -18,7 +18,7 @@ if(isset($_GET['id'])){
 <p><b>Room:</b> <?php echo $room ?></p>
 <p><b>Details:</b> <span class="truncate"><?php echo strip_tags(stripslashes(html_entity_decode($description))) ?></span></p>
 <p><b>Schedule:</b> <?php echo date("d F Y H:i",strtotime($date_in)).' - '.date("d F Y H:i",strtotime($date_out)) ?></p>
-<p><b>Total Payment:</b> <?php echo ($total_amount) ?> </p>
+<p><b>Total Payment:</b> Rp.<?php echo number_format($total_amount) ?> </p>
 
 <form action="" id="book-status">
     <input type="hidden" name="id" value="<?php echo $id ?>">

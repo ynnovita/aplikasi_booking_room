@@ -14,8 +14,8 @@ if(isset($_GET['id'])){
 </style>
 <p><b>Order Date:</b> <?php echo $date_created ?></p>
 <p><b>Room:</b> <?php echo $room ?></p>
-<p><b>Details:</b> <span class="truncate"><?php echo strip_tags(stripslashes(html_entity_decode($description))) ?></span></p>
 <p><b>Schedule:</b> <?php echo date("d F Y H:i",strtotime($date_in)).' - '.date("d F Y H:i",strtotime($date_out)) ?></p>
+<p><b>Duration:</b> <?php echo $duration ?> Jam</p>
 <p><b>Adults:</b> <?php echo ($adults) ?></p>
 <p><b>Total Payment:</b> <?php echo $total_amount ?></p>
 <p><b>Status:</b> 
