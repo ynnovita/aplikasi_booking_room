@@ -13,10 +13,10 @@ if($qry->num_rows > 0){
         <div class="row">
             <div class="form-group row">
                 <div class="form-group">
-                    <label for="control-label" class="col-sm-3 col-form-label">Check In 
+                    <label for="control-label" class="col-md-9 col-form-label">Check In 
                         <span class="red-asterisk"> *</span>
                     </label>
-                    <div class="col-sm-9">
+                    <div class="col-md-9">
                         <div class="input-group">
                             <div class="input-group-prepend">
                                 <span class="input-group-text">
@@ -28,10 +28,10 @@ if($qry->num_rows > 0){
                         </div>
                     </div>
 
-                    <label for="date_out" class="col-sm-3 col-form-label">Check Out 
+                    <label for="date_out" class="col-md-9 col-form-label">Check Out 
                         <span class="red-asterisk"> *</span>
                     </label>
-                    <div class="col-sm-9">
+                    <div class="col-md-9">
                         <div class="input-group">
                             <div class="input-group-prepend">
                                 <span class="input-group-text">
@@ -43,18 +43,18 @@ if($qry->num_rows > 0){
                         </div>
                     </div>
 
-                    <label class="col-sm-3 col-form-label" for="room_type">Room Type</label>
-                    <div class="col-sm-9">
+                    <label class="col-md-9 col-form-label" for="room_type">Room Type</label>
+                    <div class="col-md-9">
                         <span class="input-group-text">
                             <td class="text-right" id="room_type">Room <?php echo $_GET['room_id'] ?></td>
                         </span>
                     </div>
 
-                    <label class="col-sm-3 col-form-label" for="adults">Adults
+                    <label class="col-md-9 col-form-label" for="adults">Adults
                         <span class="red-asterisk"> *</span>
                     </label>
-                    <div class="col-sm-9">
-                        <select required class="custom-select mr-sm-2"  name="adults">
+                    <div class="col-md-9">
+                        <select required class="custom-select mr-md-2"  name="adults">
                             <option selected value="1">1</option>
                             <option value="2">2</option>
                             <option value="3">3</option>
@@ -66,21 +66,16 @@ if($qry->num_rows > 0){
                         </select>
                     </div>
                 </div>
-            </div>
-            <div class="form-group row">
+                <div class="form-group row">
                 <div class="form-group">
-                    <button type="button" class="btn btn-info" style="margin-left: 0.8em;" data-container="body" data-toggle="popover"
-                        data-placement="right" data-content="booking minimal 2 jam sebelum jam check-in. Jika tidak melakukan booking minimal, kami mohon untuk menghubungi admin untuk memastikan ketersediaan room karaoke.">
-                        Check-in policies
-                    </button>
+                    <a type="button" class="btn btn-primary check_policies" href="javascript:void(0)" class="btn btn-info">Check-in policies</a>     
                 </div>
             </div>
-        </div>
-
-        <hr>
-        <div class="row">
-            <div class="col-md-6 ">
+            <hr>
+            <div class="col-md-6 offset-md-3">
                 <h4>Total</h4>
+                <div class="row row-cols-1">
+                <div class="callout callout-info p-1">
                 <table class="table">
                     <colgroup>
                             <col width="50%">
@@ -186,6 +181,9 @@ class Util{
                     end_loader()
                 }
             })
+        })
+        $('.check_policies').click(function(){
+            uni_modal("Check-In Policies","check_policies.php?")
         })
     })
 </script>
