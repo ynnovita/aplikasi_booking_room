@@ -34,13 +34,13 @@ $pdf->SetFont('Times', '', 12);
 
 // Header tabel
 $pdf->SetFont('Times', 'B', 12);
-$pdf->Cell(10, 10, 'ID', 1,);
-$pdf->Cell(40, 10, 'Date Created', 1,);
-$pdf->Cell(40, 10, 'User', 1,);
-$pdf->Cell(20, 10, 'Room', 1,);
-$pdf->Cell(80, 10, 'Schedule', 1,);
-$pdf->Cell(20, 10, 'Status', 1,);
-$pdf->Cell(30, 10, 'Total', 1,);
+$pdf->Cell(10, 10, 'ID', 1,0, 'C');
+$pdf->Cell(40, 10, 'Date Created', 1,0, 'C');
+$pdf->Cell(40, 10, 'User', 1,0, 'C');
+$pdf->Cell(20, 10, 'Room', 1,0, 'C');
+$pdf->Cell(80, 10, 'Schedule', 1,0, 'C');
+$pdf->Cell(20, 10, 'Status', 1,0, 'C');
+$pdf->Cell(30, 10, 'Total', 1,0, 'C');
 $pdf->Ln();
 
 
@@ -49,12 +49,12 @@ $pdf->SetFont('Times', '', 12);
 if ($qry->num_rows > 0) {
     $i = 1;
     while ($row = $qry->fetch_array()) {
-    $pdf->Cell(10, 10, $row['id'], 1);
+    $pdf->Cell(10, 10, $row['id'], 1, 0, 'C');
     $pdf->Cell(40, 10, date("Y-m-d H:i",strtotime($row['date_created'])), 1);
     $pdf->Cell(40, 10, $row['name'], 1);
-    $pdf->Cell(20, 10, $row['room'], 1);
+    $pdf->Cell(20, 10, $row['room'], 1, 0, 'C');
     $pdf->Cell(80, 10, date("Y-m-d H:i",strtotime($row['date_in'])).' - '.date("Y-m-d H:i",strtotime($row['date_out'])), 1);
-    $pdf->Cell(20, 10, $row['status'], 1);
+    $pdf->Cell(20, 10, $row['status'], 1, 0, 'C');
     $pdf->Cell(30, 10, 'Rp.' .number_format($row['total_amount'], 0,',','.'), 1);
     $pdf->Ln();
     $i++;
